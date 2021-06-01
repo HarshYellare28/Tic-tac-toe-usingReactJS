@@ -10,6 +10,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
 var NotDrawn = false;
+var hasWon = false;
 const itemArray = new Array(9).fill("empty");
 const App = () => {
   const [isCross,setIsCross] = useState(false)
@@ -19,57 +20,70 @@ const App = () => {
     setIsCross(false)
     setWinMessage("")
     NotDrawn = true;
+    hasWon = false;
     itemArray.fill("empty",0,9);
   }
 
   const checkIsWinner = () => {
     if(itemArray[0] !== "empty" && itemArray[0] === itemArray[1] && itemArray[0] === itemArray[2])
     {
+      hasWon = true;
       setWinMessage(`${itemArray[0]} won !`)
     }
     else if(itemArray[3] !== "empty" && itemArray[3] === itemArray[4] && itemArray[3] === itemArray[5])
     {
+      hasWon = true;
       setWinMessage(`${itemArray[3]} won !`)
     }
     else if(itemArray[6] !== "empty" && itemArray[6] === itemArray[7] && itemArray[6] === itemArray[8])
     {
+      hasWon = true;
       setWinMessage(`${itemArray[6]} won !`)
     }
     else if(itemArray[0] !== "empty" && itemArray[0] === itemArray[3] && itemArray[0] === itemArray[6])
     {
+      hasWon = true;
       setWinMessage(`${itemArray[0]} won !`)
     }
     else if(itemArray[1] !== "empty" && itemArray[1] === itemArray[4] && itemArray[1] === itemArray[7])
     {
+      hasWon = true;
       setWinMessage(`${itemArray[1]} won !`)
     }
     else if(itemArray[2] !== "empty" && itemArray[2] === itemArray[5] && itemArray[2] === itemArray[8])
     {
+      hasWon = true;
       setWinMessage(`${itemArray[2]} won !`)
     }
     else if(itemArray[0] !== "empty" && itemArray[0] === itemArray[4] && itemArray[0] === itemArray[8])
     {
+      hasWon = true;
       setWinMessage(`${itemArray[0]} won !`)
     }
     else if(itemArray[2] !== "empty" && itemArray[2] === itemArray[4] && itemArray[2] === itemArray[6])
     {
+      hasWon = true;
       setWinMessage(`${itemArray[2]} won !`)
     }
   }
   
   const checkIsDrawn = () => {
-    itemArray.forEach((icon) => {
-      if(icon==="empty")
-      {
-        NotDrawn = true;
-      }
-    })
-    if(NotDrawn === false)
+    if(hasWon==false)
     {
-      setWinMessage(`Game Drawn !`)
+      itemArray.forEach((icon) => {
+          if(icon==="empty")
+          {
+            NotDrawn = true;
+          }
+        })
+        if(NotDrawn === false)
+        {
+          setWinMessage(`Game Drawn !`)
+        }
+        NotDrawn = false;
+      }
     }
-    NotDrawn = false;
-  }
+    
 
   const changeItem = itemNumber => {
     if(winMessage)
